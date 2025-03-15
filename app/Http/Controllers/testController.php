@@ -148,4 +148,8 @@ class testController extends Controller
 
         return json_encode($blade->getAllViews()->merge($blade->getAllComponents()));
     }
+    public function test3()
+    {
+        return view('test.counter');
+    }
 }
