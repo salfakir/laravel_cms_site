@@ -2,9 +2,10 @@
 <html>
 <head>
 @livewireStyles
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-<livewire:counter/>
+<livewire:user-table/>
 @livewireScripts
 </body>
 </html>
