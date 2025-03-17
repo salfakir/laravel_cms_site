@@ -6,8 +6,11 @@ use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Columns\DateColumn;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\User;
+
+use function Illuminate\Log\log;
 
 class UserTable extends DataTableComponent
 {
@@ -16,6 +19,13 @@ class UserTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id');
+        $this->setFilterPillsItemAttributes([
+            "class" => "bg-indigo-100 text-indigo-800",
+        ]);
+        /* $a= new Filter("asdf"); */
+        /* $a->setLabelAttributes([ */
+        /*     'class' => 'bg-indigo-200 text-indigo-800', */
+        /* ]); */
     }
 
     public function columns(): array
@@ -43,15 +53,24 @@ class UserTable extends DataTableComponent
     }
     public function filters(): array
     {
+        $fil =            TextFilter::make('Name')
+            ->config([
+                'placeholder' => 'Search Name',
+                'maxlength' => '25',
+            ])
+            ->filter(function (Builder $builder, string $value) {
+                $builder->where('users.name', 'like', '%' . $value . '%');
+            })
+            ->setFilterLabelAttributes(
+                [
+                    //blue text
+                    'class' => 'text-white',
+                ]
+            );
+        /* log(get_class_methods($fil)); */
+
         return [
-            TextFilter::make('Name')
-                ->config([
-                    'placeholder' => 'Search Name',
-                    'maxlength' => '25',
-                ])
-                ->filter(function (Builder $builder, string $value) {
-                    $builder->where('users.name', 'like', '%' . $value . '%');
-                }),
+            $fil
         ];
     }
 }
