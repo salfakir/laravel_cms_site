@@ -1,14 +1,14 @@
 import './bootstrap';
-import axios from 'axios';
-window.axios = axios;
+// import axios from 'axios';
+// window.axios = axios;
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-// import Alpine from 'alpinejs';
-import Alpine from 'alpinejs';
+// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// // import Alpine from 'alpinejs';
+// import { Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
+// // import Alpine from 'alpinejs';
 import collapse from '@alpinejs/collapse';
-window.Alpine = Alpine;
-
-document.addEventListener('alpine:init', () => {
+window.addEventListener('livewire:initialized', () => {
+    const Alpine = window.Alpine;
     Alpine.store('buttonStore', {
         buttons: [],
         addButton(label) {
@@ -83,7 +83,14 @@ document.addEventListener('alpine:init', () => {
             scrollingUp: false,
             windowWidth: window.innerWidth,
         }
-    })
-})
-Alpine.plugin(collapse)
-Alpine.start()
+    });
+    Alpine.plugin(collapse);
+
+    Alpine.initTree(document.body);
+});
+// window.Alpine = Alpine;
+// window.deferLoadingAlpine = function(callback) {
+//     window.addEventListener('livewire:initialized', function() {
+//         callback();
+//     });
+// };
