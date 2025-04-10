@@ -152,4 +152,16 @@ class testController extends Controller
     {
         return view('test.counter');
     }
+    public function test4()
+    {
+        return view('test.side1');
+    }
+    public function test5()
+    {
+        return view('test.side2');
+    }
+    public function test6()
+    {
+        return view('test.tes');
+    }
 }
